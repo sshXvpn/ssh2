@@ -1,8 +1,10 @@
 <?php
+
 ## shared by sshxvpn
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 error_reporting(0);
+# untuk sembunyikan error
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $login = $_POST['username'];
