@@ -19,13 +19,15 @@ useradd -e $(date -d "$masaaktif days" +"%Y-%m-%d") -s /bin/false -M $Login
 exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
 echo -e "$Pass\n$Pass\n" | passwd $Login &> /dev/null
 
-echo -e "$MYIP"
-echo -e "$Login"
-echo -e "$Pass"
-echo -e "$masaaktif"
-echo -e "1-2288"
-echo -e "443"
-echo -e "80"
-echo -e "53"
-echo -e "1194"
+echo -e "$MYIP" #var1
+echo -e "$Login" #var2
+echo -e "$Pass" #var3
+echo -e "$masaaktif" #var4
+echo -e "1-2288" #var5
+echo -e "443" #var6
+echo -e "80" #var7
+echo -e "53" #var8
+echo -e "1194" #var9
+
+#var 1-9 output yang akan kita panggil dalam php, korang boleh tambah ikut keperluan
 
