@@ -1,15 +1,18 @@
 <?php
-
-## shared by sshxvpn
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 error_reporting(0);
-# untuk sembunyikan error
+
+function sanitizeInput($input) {
+    $sanitized = trim($input); 
+    $sanitized = htmlspecialchars($sanitized);
+    return $sanitized;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $login = $_POST['username'];
-    $pass = $_POST['password'];
-    $masaaktif = "5"; 
+    $login = sanitizeInput($_POST['username']);
+    $pass = sanitizeInput($_POST['password']);
+    $masaaktif = "5";
 
     $sshUser = 'root'; # vps users
     $sshPassword = 'your_password'; # vps password
