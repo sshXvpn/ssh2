@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'account_info' => ''
     ];
 
-    $connection = ssh2_connect($host, 22);
+    $connection = ssh2_connect($host, 22); # part port ini saya sangat2 rekomenkan untuk tukar ke port lain, selain 22
     if (!$connection) {
         $response['message'] = 'Failed to connect to the VPS host.';
     } elseif (!ssh2_auth_password($connection, $sshUser, $sshPassword)) {
