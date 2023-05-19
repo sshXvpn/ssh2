@@ -8,6 +8,45 @@ read -p "   Username: " Login
 read -p "   Expired (days): " masaaktif
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
+VmessTLS=`cat<<EOF
+      {
+      "v": "2",
+      "ps": "${user}",
+      "add": "${domain}",
+      "port": "443",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "ws",
+      "path": "/vmess",
+      "type": "none",
+      "host": "",
+      "tls": "tls"
+}
+EOF`
+
+
+VmessNTLS=`cat<<EOF
+      {
+      "v": "2",
+      "ps": "${user}",
+      "add": "${domain}",
+      "port": "80",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "ws",
+      "path": "/vmess",
+      "type": "none",
+      "host": "",
+      "tls": "none"
+}
+EOF`
+
+vmess_base641=$( base64 -w 0 <<< $vmess_json1)
+vmess_base642=$( base64 -w 0 <<< $vmess_json2)
+
+https="vmess://$(echo $VmessTLS | base64 -w 0)"
+http="vmess://$(echo $VmessNTLD | base64 -w 0)"
+
 echo -e "$Login"
 echo -e "$exp"
 echo -e "$https" #port 443
