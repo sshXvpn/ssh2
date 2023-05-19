@@ -72,15 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <div class="container">
-        <?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
-            <h1>Create SSH Account</h1>
-            <div id="responseMessage" class="alert alert-<?php echo $response['status'] === 'success' ? 'success' : 'danger'; ?>" role="alert">
-                <?php echo $response['message']; ?>
-            </div>
-            <div id="accountInfo">
-                <?php echo $response['account_info']; ?>
-            </div>
-        <?php endif; ?>
+        <h1>Create SSH Account</h1>
+        <div id="responseMessage" class="alert" role="alert"></div>
+        <div id="accountInfo"></div>
 
         <form id="sshForm" method="POST">
             <label for="username">Username:</label>
@@ -92,6 +86,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        var form = document.getElementById('sshForm');
+        var responseMessage = document.getElementById('responseMessage');
+        var accountInfo = document.getElementById('accountInfo');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Create an XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '', true); // Set the URL to the same page ('' means the current page)
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+            // Handle the AJAX response
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    responseMessage.className = 'alert alert-' + response.status;
+                    responseMessage.innerHTML = response.message;
+                    accountInfo.innerHTML = response.account_info;
+                }
+            };
+
+            // Prepare the form data to be sent
+            var formData = new FormData(form);
+
+            // Send the AJAX request
+            xhr.send(formData);
+        });
+    </script>
 </body>
 </html>
-
