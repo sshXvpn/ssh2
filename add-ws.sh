@@ -8,6 +8,11 @@ read -p "   Username: " Login
 read -p "   Expired (days): " masaaktif
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
+
+exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+sed -i '/#vmess$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
+
 VmessTLS=`cat<<EOF
       {
       "v": "2",
@@ -47,10 +52,12 @@ vmess_base642=$( base64 -w 0 <<< $vmess_json2)
 https="vmess://$(echo $VmessTLS | base64 -w 0)"
 http="vmess://$(echo $VmessNTLD | base64 -w 0)"
 
+systemctl restart xray
+
 echo -e "$Login"
 echo -e "$exp"
-echo -e "$https" #port 443
+echo -e "$https"
+echo -e "$http"
 
-echo -e "$http" #port 80
 
 # incomplet code
