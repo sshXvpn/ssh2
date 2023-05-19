@@ -50,7 +50,7 @@ vmess_base641=$( base64 -w 0 <<< $vmess_json1)
 vmess_base642=$( base64 -w 0 <<< $vmess_json2)
 
 https="vmess://$(echo $VmessTLS | base64 -w 0)"
-http="vmess://$(echo $VmessNTLD | base64 -w 0)"
+http="vmess://$(echo $VmessNTLS | base64 -w 0)"
 
 systemctl restart xray
 
